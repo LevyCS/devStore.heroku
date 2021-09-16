@@ -17,15 +17,15 @@ app.post('/produto', async(req, resp) => {
     try {
         let {nomeProduto, categoria, precoDe, precoPor, avaliacao, descricao, quantidadeEstoque, imagemProduto} = req.body;
 
-        if(nomeProduto == '' || categoria == '' || precoDe == '' || precoPor == '' || avaliacao == '' || descricao == '' || quantidadeEstoque == '' || imagemProduto == '')
+        if(nomeProduto == '' || nomeProduto == null || categoria == '' || categoria == null || precoDe == '' || precoDe == null || precoPor == '' || precoPor == null || avaliacao == '' || avaliacao == null || descricao == '' || descricao == null || quantidadeEstoque == '' || quantidadeEstoque == null || imagemProduto == '' || imagemProduto == null)
            return resp.send({erro: "Um ou mais campos não estão preenchidos"})
 
         if(isNaN(avaliacao) || isNaN(precoDe) || isNaN(precoPor) || isNaN(quantidadeEstoque)) 
-            return resp.send({erro: "avaliacao, preco de:, preco por: e Estoque precisam ser números"})
+            return resp.send({erro: "avaliacao, preco de, preco por e Estoque precisam ser números"})
 
         if (avaliacao < 0 || precoDe < 0 || precoPor < 0 || quantidadeEstoque < 0)
-            return resp.send({erro: "avaliacao, preco DE:, preco POR: e Estoque precisam ser números positivos"})
-        
+            return resp.send({erro: "avaliacao, preco de, preco por e Estoque precisam ser números positivos"})
+
         let u = await db.tb_produto.findOne({where: {nm_produto: nomeProduto}}) 
         if (u != null) 
             return resp.send( {erro: "Produto já cadastrado"})
@@ -38,14 +38,15 @@ app.post('/produto', async(req, resp) => {
 app.put('/produto/:id', async(req,resp) => {
     try {
         let {nomeProduto, categoria, precoDe, precoPor, avaliacao, descricao, quantidadeEstoque, imagemProduto} = req.body;
-        if(nomeProduto == '' || categoria == '' || precoDe == '' || precoPor == '' || avaliacao == '' || descricao == '' || quantidadeEstoque == '' || imagemProduto == '')
+        
+        if(nomeProduto == '' || nomeProduto == null || categoria == '' || categoria == null || precoDe == '' || precoDe == null || precoPor == '' || precoPor == null || avaliacao == '' || avaliacao == null || descricao == '' || descricao == null || quantidadeEstoque == '' || quantidadeEstoque == null || imagemProduto == '' || imagemProduto == null)
             return resp.send({erro: "Um ou mais campos não estão preenchidos"})
 
         if(isNaN(avaliacao) || isNaN(precoDe) || isNaN(precoPor) || isNaN(quantidadeEstoque)) 
-            return resp.send({erro: "avaliacao, preco de:, preco por: e Estoque precisam ser números"})
+            return resp.send({erro: "avaliacao, preco de, preco por e Estoque precisam ser números"})
 
         if (avaliacao < 0 || precoDe < 0 || precoPor < 0 || quantidadeEstoque < 0)
-            return resp.send({erro: "avaliacao, preco DE:, preco POR: e Estoque precisam ser números positivos"})
+            return resp.send({erro: "avaliacao, preco de, preco por e Estoque precisam ser números positivos"})
     
         let u = await db.tb_produto.findOne({where: {nm_produto: nomeProduto}}) 
         if (u != null) {
